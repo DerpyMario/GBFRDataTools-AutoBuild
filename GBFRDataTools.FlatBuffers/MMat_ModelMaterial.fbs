@@ -187,4 +187,5 @@ table ModelMaterialSet (fs_serializer) {
     bool5:bool; // Rare
 }
 
+file_extension "mmat";
 root_type ModelMaterialSet;
