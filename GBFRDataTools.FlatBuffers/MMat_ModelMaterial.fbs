@@ -132,6 +132,14 @@ enum ShaderMapTypeHash : uint
     g_WindMaskMap          = 0x1DD2F116,
 }
 
+enum ShadowType : byte
+{
+	NoShadow = 0,
+	ShadowEnable_Unk1 = 1,
+	ShadowEnable_AlphaBlend = 2,
+	ShadowEnable_NoAlphaBlend = 3,
+}
+
 struct ShaderParamInfo // Fetched at ref: 56 57 48 83 EC ? 48 89 D6 48 89 CF 41 0F B6 C0
 {
     param_hash:ShaderParameterTypeNameHash(key);
@@ -163,10 +171,10 @@ table Material
     unique_material_name_hash_maybe:uint;
     shader_type:byte;
     shader_sub_type:byte;
-    unk_type_8:byte; // 0-3
+    shadow_type:ShadowType; // 0-3
     bool9:bool;
     bool10:bool;
-    bool11:bool;
+    ignore_alpha:bool;
     bool12:bool;
 } 
 
