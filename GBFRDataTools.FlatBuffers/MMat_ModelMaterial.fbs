@@ -17,7 +17,7 @@ enum ShaderParameterTypeNameHash : uint
     g_UseIceEmissive0      = 0x3C966EE3,
     g_4298F7E4             = 0x4298F7E4,
     g_EnableOutLine        = 0x49D8C1B9,
-    g_53F49792             = 0x53F49792,
+    g_53F49792_EnableAlpha_GUESSED = 0x53F49792, // Name is guessed on functionality.
     g_56346692             = 0x56346692,
     g_IsUseAlbedoAlphaClip = 0x60F31A22,
     g_IsUseDetailNormal    = 0x6C5CB9AC,
@@ -32,7 +32,7 @@ enum ShaderParameterTypeNameHash : uint
     g_AB261CFA             = 0xAB261CFA,
     g_AC6F995D             = 0xAC6F995D,
     g_B0EA41D9             = 0xB0EA41D9,
-    g_B460A0F0             = 0xB460A0F0,
+    g_IsUseDepthFade       = 0xB460A0F0,
     g_BAEF6920             = 0xBAEF6920,
     g_C5BD3DED             = 0xC5BD3DED,
     g_C9762248             = 0xC9762248,
@@ -52,7 +52,6 @@ enum ShaderParamValueType : byte
     Vec3 = 4,
     Vec4 = 5
 }
-
 
 enum ShaderMapTypeHash : uint
 {
@@ -135,36 +134,36 @@ enum ShaderMapTypeHash : uint
 
 struct ShaderParamInfo
 {
-    ParamHash:ShaderParameterTypeNameHash;
-    ValueOrOffset:ushort; // When Vec2/3/4 this is an offset, will use ShaderDataBuffer
-    ValueType:ShaderParamValueType;
+    param_hash:ShaderParameterTypeNameHash(key);
+    value_or_offset:ushort; // When float/Vec2/3/4 this is an offset to the float pool
+    value_type:ShaderParamValueType;
 }
 
 table GraniteVirtualTextureStreamingInfo
 {
-    PageFile:[string];
-    LayerToShaderMapNameHash:[ShaderMapTypeHash];
-    Unk3:byte;
-    Unk4:byte;
-    TileSetNumber:byte; // 0 to 11 max
+    page_file:[string];
+    layer_to_shader_map_name_hash:[ShaderMapTypeHash];
+    unk4:byte; // No idea. Never more than 4.
+    unk5:byte; // No idea. Never more than 5.
+    tile_set_number:byte; // 0 to 11 max
 }
 
 table TextureMapInfo
 {
-    ShaderMapNameHash:ShaderMapTypeHash;
-    TextureName:string;
+    shader_map_name_hash:ShaderMapTypeHash(key);
+    texture_name:string;
 }
 
 table Material
 {
-    ShaderParams:[ShaderParamInfo];
-    TextureMaps:[TextureMapInfo];
-    A3:[int];
-    GraniteParams:GraniteVirtualTextureStreamingInfo;
-    UniqueMaterialNameHashMaybe:uint;
-    PixelShader:byte;
-    VertexShader:byte;
-    UnkType8:byte; // 0-3
+    shader_params:[ShaderParamInfo];
+    texture_maps:[TextureMapInfo];
+    constant_buffer_indices:[ushort];
+    granite_params:GraniteVirtualTextureStreamingInfo;
+    unique_material_name_hash_maybe:uint;
+    shader_type:byte;
+    shader_sub_type:byte;
+    unk_type_8:byte; // 0-3
     bool9:bool;
     bool10:bool;
     bool11:bool;
@@ -173,16 +172,16 @@ table Material
 
 table ConstantBuffer
 {
-    Buffer:[float];
-    UnkUniqueParamNameHash:uint;
+    buffer:[uint];
+    unk_unique_param_name_hash:uint;
 }
 
 table ModelMaterialSet (fs_serializer) {
-    Magic:uint;
-    Materials:[Material];
-    ConstantBuffers:[ConstantBuffer];
-    ShaderParamDataBuffer:[float];
-    Unk2:byte; // Not all .mmat sets this one, but 'em' mat files seems to do so
+    magic:uint;
+    materials:[Material];
+    constant_buffers:[ConstantBuffer];
+    shader_param_float_data_pool:[float];
+    unk2:byte; // Not all .mmat sets this one, but 'em' mat files seems to do so
     bool3:bool;
     bool4:bool; // Rare
     bool5:bool; // Rare
