@@ -142,7 +142,7 @@ enum ShadowType : byte
 
 struct ShaderParamInfo // Fetched at ref: 56 57 48 83 EC ? 48 89 D6 48 89 CF 41 0F B6 C0
 {
-    param_hash:ShaderParameterTypeNameHash(key);
+    param_hash:ShaderParameterTypeNameHash; // key
     value_or_offset:ushort; // When float/Vec2/3/4 this is an offset to the float pool
     value_type:ShaderParamValueType;
 }
@@ -158,7 +158,7 @@ table GraniteVirtualTextureStreamingInfo
 
 table TextureMapInfo
 {
-    shader_map_name_hash:ShaderMapTypeHash(key);
+    shader_map_name_hash:ShaderMapTypeHash; // (key);
     texture_name:string;
 }
 

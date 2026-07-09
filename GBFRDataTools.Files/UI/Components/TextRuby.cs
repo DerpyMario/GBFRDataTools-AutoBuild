@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using GBFRDataTools.Files.UI.Types;
+
+using System.Numerics;
 
 namespace GBFRDataTools.Files.UI.Components;
 
@@ -10,4 +12,7 @@ public class TextRuby : Component
     public int FontSize { get; set; }
     public int Spacing { get; set; }
     public Vector4 Color { get; set; }
+
+    // ER
+    public string Font { get; set; }
 }
