@@ -24,13 +24,12 @@ public class ArchiveBruteforcer
     }
 
     public static string[] type = [
-        "pl", "em", "np", "wp", "we", "wn", "bg", "bh", "ba", "fp", "fe", "fn", "et", "ef", "it", "sc", "tr", "bt",
+        "pl", "em", "np", "wp", "we", "wn", "bg", "bh", "ba", "fp", "fe", "fn", "et", "ef", "it", "sc", "tr", "bt", "so",
         // cw, ct, cm, ci, sst
     ];
 
     public void Bruteforce()
     {
-        /*
         BruteforceEventCutscenes();
         BruteforceWwisePacks();
         BruteforceMinimap();
@@ -40,20 +39,21 @@ public class ArchiveBruteforcer
         BruteforceSoundsAndLipsync();
         BruteforceFsmQuest();
         BruteforceMiscTextures();
-        BruteforceEffectPrimitive();
-        BruteforceFromStringList();
-        */
-        BruteforceFileReferencesFromLayout();
-        BruteforceFileReferencesFromFSM();
+
+        BruteforceQuestBaseInfo();
+        //.BruteforceEffectPrimitive();
+        //BruteforceFromStringList();
+        //BruteforceFileReferencesFromLayout();
+        //BruteforceFileReferencesFromFSM();
         
-        /*
         BruteforceEffectTextureFiles();
         BruteforcePhaseEffect();
         BruteforceLayout2();
-        */
-        BruteforceSeqBxm(); // Slow!
+        
+        //ListFiles();
+        //BruteforceSeqBxm(); // Slow!
 
-        /*
+        
         for (int i = 0; i < 0x1000; i++)
         {
             _archive.RegisterFileIfValid($"system/npc/{i:X3}_npcconfig.msg");
@@ -63,6 +63,8 @@ public class ArchiveBruteforcer
 
         foreach (var t in type)
         {
+            BruteforceModelStreaming(t);
+            
             BruteforceBehavior(t);
             BruteforcePreset(t);
             BruteforceSystemPlayerData(t);
@@ -70,13 +72,13 @@ public class ArchiveBruteforcer
             BruteforceEffectPrefix(t);
             BruteforceModel(t);
             BruteforcePrefixListFiles(t);
+            
         }
         
 
         
-        BruteforcePrefixWeird("st", "r");
-        BruteforcePrefixWeird("ph", "p");
-        */
+        //BruteforcePrefixWeird("st", "r");
+        //BruteforcePrefixWeird("ph", "p");
 
         foreach (var file in _archive.ArchiveFilesHashTable.ToList())
         {
@@ -179,6 +181,17 @@ public class ArchiveBruteforcer
             _archive.RegisterFileIfValid(file.Key.Replace("seq.bxm", "seq_edit_speed.bxm"));
             _archive.RegisterFileIfValid(file.Key.Replace("seq.bxm", "seq_edit_vib.bxm"));
             _archive.RegisterFileIfValid(file.Key.Replace("seq.bxm", "seq_edit_camera.bxm"));
+        }
+    }
+
+    public void BruteforceQuestBaseInfo()
+    {
+        for (int i = 0; i < 0x900000; i++)
+        {
+            _archive.RegisterFileIfValid($"quest/{i:X6}/BaseInfo.msg");
+            _archive.RegisterFileIfValid($"quest/{i:X6}/SectionList.msg");
+            _archive.RegisterFileIfValid($"quest/ex/{i:X6}/BaseInfo.msg");
+            _archive.RegisterFileIfValid($"quest/ex/{i:X6}/SectionList.msg");
         }
     }
 
@@ -553,7 +566,7 @@ public class ArchiveBruteforcer
         // Requires file generated with the following command (can take a while, 1gb)
         // strings2 -r "extracted/*" > strings.txt
 
-        using var sr = new StreamReader(@"D:\Games\SteamLibrary\steamapps\common\Granblue Fantasy Relink\strings.txt");
+        using var sr = new StreamReader(@"D:\Games\SteamLibrary\steamapps\common\Granblue Fantasy Relink Endless Ragnarok Beta Test\strings.txt");
         while (!sr.EndOfStream)
         {
             string line = sr.ReadLine();
@@ -624,7 +637,7 @@ public class ArchiveBruteforcer
     public void BruteforceFileReferencesFromLayout()
     {
         // Requires files extracted beforehand
-        foreach (var file in Directory.GetFiles(@"D:\Modding_Research\Gran_Turismo\Gran_Turismo_7\test\CUSA34766\Image0\data\layout", "*.msg", SearchOption.AllDirectories))
+        foreach (var file in Directory.GetFiles(@"D:\Games\SteamLibrary\steamapps\common\Granblue Fantasy Relink Endless Ragnarok Beta Test\extracted\layout", "*.msg", SearchOption.AllDirectories))
         {
             try
             {
@@ -640,7 +653,7 @@ public class ArchiveBruteforcer
             }
         }
 
-        foreach (var file in Directory.GetFiles(@"D:\Modding_Research\Gran_Turismo\Gran_Turismo_7\test\CUSA34766\Image0\data\.unmapped", "*.msg", SearchOption.AllDirectories))
+        foreach (var file in Directory.GetFiles(@"D:\Games\SteamLibrary\steamapps\common\Granblue Fantasy Relink Endless Ragnarok Beta Test\extracted\.unmapped", "*.msg", SearchOption.AllDirectories))
         {
             try
             {
@@ -726,7 +739,7 @@ public class ArchiveBruteforcer
     public void BruteforceFileReferencesFromFSM()
     {
         // Requires files extracted beforehand
-        foreach (var file in Directory.GetFiles(@"D:\Modding_Research\Gran_Turismo\Gran_Turismo_7\test\CUSA34766\Image0\data\system\fsm", "*.msg", SearchOption.AllDirectories))
+        foreach (var file in Directory.GetFiles(@"D:\Games\SteamLibrary\steamapps\common\Granblue Fantasy Relink Endless Ragnarok Beta Test\extracted\system\fsm", "*.msg", SearchOption.AllDirectories))
         {
             try
             {
@@ -939,7 +952,7 @@ public class ArchiveBruteforcer
     {
         foreach (var type in type)
         {
-            string typeDir = Path.Combine(@"D:\Modding_Research\Gran_Turismo\Gran_Turismo_7\test\CUSA34766\Image0\data", type);
+            string typeDir = Path.Combine(@"D:\Games\SteamLibrary\steamapps\common\Granblue Fantasy Relink Endless Ragnarok Beta Test\extracted", type);
             if (Directory.Exists(typeDir))
             {
                 foreach (var dir in Directory.GetDirectories(typeDir))
