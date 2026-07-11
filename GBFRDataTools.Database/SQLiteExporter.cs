@@ -48,6 +48,11 @@ public class SQLiteExporter : IDisposable
         _con = new SqliteConnection($"Data Source={sqliteDbFile}");
         _con.Open();
 
+        // That'll improve performance by not creating the journal file everytime
+        var com = _con.CreateCommand();
+        com.CommandText = "PRAGMA journal_mode = MEMORY;";
+        com.ExecuteNonQuery();
+
         foreach (var table in _database.Tables) 
         {
             ExportTableToSQLite(table.Key, table.Value.Columns, table.Value.Rows);
@@ -99,25 +104,27 @@ public class SQLiteExporter : IDisposable
         //SQL: INSERT INTO
         if (rows.Count > 0)
         {
-            string insertDefinition = $"INSERT INTO \"{name}\" (";
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append($"INSERT INTO \"{name}\" (");
             foreach (TableColumn header in columns)
             {
-                insertDefinition += $"\"{header.Name}\", ";
+                sb.Append($"\"{header.Name}\", ");
             }
-            insertDefinition = insertDefinition.Remove(insertDefinition.Length - 2); // replace trailing comma
-            insertDefinition += ")\n" +
-                                "VALUES\n";
+            sb.Remove(sb.Length - 2, 1); // replace trailing comma
+            sb.Append(")\n" +
+                                "VALUES\n");
 
             for (int entryCounter = 0; entryCounter < rows.Count; entryCounter++)
             {
-                insertDefinition += "    (";
+                sb.Append("    (");
                 var row = rows[entryCounter];
 
                 for (int i = 0; i < columns.Count; i++)
                 {
                     TableColumn column = columns[i];
 
-                    insertDefinition += column.Type switch
+                    sb.Append(column.Type switch
                     {
                         DBColumnType.String or DBColumnType.RawString or DBColumnType.HashString or DBColumnType.HexUInt or DBColumnType.StringPointer
                             => $"'{((string)row.Cells[i]).Replace("'", "''")}', ",
@@ -131,23 +138,24 @@ public class SQLiteExporter : IDisposable
                         DBColumnType.SByte => $"{(sbyte)row.Cells[i]}, ",
                         DBColumnType.Double => $"{(double)row.Cells[i]}, ",
                         _ => throw new InvalidDataException($"Unexpected type '{column.Type}' for column {column.Name} in table {name}")
-                    };
+                    });
                 }
 
-                insertDefinition = insertDefinition.Remove(insertDefinition.Length - 2); // replace trailing comma
-                insertDefinition += "),\n";
+                sb.Remove(sb.Length - 2, 1); // replace trailing comma
+                sb.Append("),\n");
 
-                if (entryCounter % 100 == 99 && entryCounter < rows.Count - 25)
+                const int batchCount = 200;
+                if (entryCounter % batchCount == batchCount - 1 && entryCounter < rows.Count - 25)
                 {
-                    insertDefinition = insertDefinition.Remove(insertDefinition.Length - 2); // replace trailing comma
-                    insertDefinition += ";\n";
+                    sb.Remove(sb.Length - 2, 1); // replace trailing comma
+                    sb.Append(";\n");
 
 #if PRINT_SQL_QUERIES
                     Console.WriteLine(insertDefinition);
 #endif
 
                     command = _con.CreateCommand();
-                    command.CommandText = insertDefinition;
+                    command.CommandText = sb.ToString();
 #if DONT_RUN_SQL
                 Console.WriteLine($"Skipping early ({(100.0f * entryCounter) / (1.0f * rows.Count)}%) INSERT INTO for '{name}'.");
                 command.Cancel();
@@ -155,20 +163,20 @@ public class SQLiteExporter : IDisposable
                     Console.WriteLine($"Running early ({(100.0f * entryCounter) / (1.0f * rows.Count)}%) INSERT INTO for '{name}'.");
                     command.ExecuteNonQuery();
 #endif
-
-                    insertDefinition = $"INSERT INTO \"{name}\" (";
+                    sb.Clear();
+                    sb.Append($"INSERT INTO \"{name}\" (");
                     foreach (TableColumn column in columns)
                     {
-                        insertDefinition += $"\"{column.Name}\", ";
+                        sb.Append($"\"{column.Name}\", ");
                     }
-                    insertDefinition = insertDefinition.Remove(insertDefinition.Length - 2); // replace trailing comma
-                    insertDefinition += ")\n" +
-                                        "VALUES\n";
+                    sb.Remove(sb.Length - 2, 1); // replace trailing comma
+                    sb.Append(")\n" +
+                                        "VALUES\n");
                 }
             }
 
-            insertDefinition = insertDefinition.Remove(insertDefinition.Length - 2); // replace trailing comma
-            insertDefinition += ";\n";
+            sb.Remove(sb.Length - 2, 1); // replace trailing comma
+            sb.Append(";\n");
 
             /*
             var errorValue = ((stringDataOffset == 0 ? bs.Length : stringDataOffset) - bs.Position) / entryCount;
@@ -189,7 +197,7 @@ public class SQLiteExporter : IDisposable
 #endif
 
             command = _con.CreateCommand();
-            command.CommandText = insertDefinition;
+            command.CommandText = sb.ToString();
 #if DONT_RUN_SQL
             Console.WriteLine($"Skipping INSERT INTO for '{name}'.");
             command.Cancel();
