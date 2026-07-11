@@ -70,6 +70,14 @@ public class TableMappingReader
             if (string.IsNullOrEmpty(line) || line.StartsWith("//"))
                 continue;
 
+            // support comments
+            var commentIndex = line.IndexOf("//");
+            if (commentIndex >= 0)
+            {
+                line = line.Substring(0, commentIndex);
+                line = line.Trim();
+            }
+
             var split = line.Split("|");
             var id = split[0];
 
