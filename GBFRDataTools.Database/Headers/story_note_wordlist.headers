@@ -62,3 +62,7 @@ add_column|ShownByDefault|byte
 add_column|Bool35|byte
 add_column|pad1|byte
 add_column|pad2|byte
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|Unk36|int
+add_column|Unk37|int

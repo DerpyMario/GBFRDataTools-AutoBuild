@@ -5,9 +5,19 @@ add_column|TitleTextId|hash_string
 add_column|TextBodyIdController|hash_string
 add_column|TextBodyIdKeyboardAndMouse|hash_string
 add_column|CharaId|hash_string
-add_column|Unk8|int
-add_column|Bool9|byte
-add_column|Bool10|byte
+
+set_min_version|2.0.0.1        // GBFR ER Open Beta
+add_column|Unk8|hash_string
+reset_min_version|
+
+add_column|Unk9|int
+
+set_min_version|2.0.0          // GBFR ER Closed Beta
+add_column|Unk10|int
+add_column|Unk11|int
+reset_min_version|
+
+add_column|Bool12|byte
+add_column|Bool13|byte
 add_column|pad1|byte
 add_column|pad2|byte
-

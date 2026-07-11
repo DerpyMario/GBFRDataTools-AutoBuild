@@ -13,6 +13,10 @@ add_column|Unk8|hash_string
 add_column|Unk9|hash_string
 add_column|Unk10|hash_string
 
+set_min_version|2.0.0.2       // GBFR ER Demo
+add_column|Unk11|hash_string
+reset_min_version|
+
 add_column|Key|hash_string
 add_column|TutorialWindowIdUnlockRequirement|hash_string
 add_column|CharaIdRecruitmentUnlockRequirement|hash_string

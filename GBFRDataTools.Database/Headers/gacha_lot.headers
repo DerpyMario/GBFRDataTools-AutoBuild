@@ -4,3 +4,6 @@ add_column|Key|hash_string
 add_column|ItemId|hash_string
 add_column|Weight|uint
 add_column|TraitLevel|uint
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|Unk7|int

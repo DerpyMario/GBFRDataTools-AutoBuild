@@ -2,7 +2,16 @@ add_column|AtkTreeNodes|uint
 add_column|DefTreeNodes|uint
 add_column|QuestID|hex_uint
 add_column|CharaLevel|uint
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|Unk1|uint
+reset_min_version|
+
 add_column|WepLevel|uint
 add_column|WepUncapLevel|uint
-add_column|MSPBonus|uint
 
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|Unk2|uint
+reset_min_version|
+
+add_column|MSPBonus|uint

@@ -37,4 +37,14 @@ add_column|Unk36|int
 add_column|Unk37|int
 add_column|Unk38|int
 add_column|Unk39|int
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|Unk40|int
+add_column|Unk41|int
+reset_min_version|
+
+set_min_version|2.0.0.2       // GBFR ER Demo
+add_column|Unk42|int
+reset_min_version|
+
 add_column|Key|hash_string

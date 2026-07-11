@@ -20,6 +20,12 @@ add_column|Color19|hex_uint
 add_column|Color20|hex_uint
 add_column|Color21|hex_uint
 add_column|Color22|hex_uint
+
+set_min_version|2.0.0.1    // GBFR ER Open Beta
+add_column|Color23|hex_uint
+add_column|Color24|hex_uint
+reset_min_version|
+
 add_column|Key|hash_string
 add_column|CostumeName|hash_string
 add_column|CostumeInfo|hash_string

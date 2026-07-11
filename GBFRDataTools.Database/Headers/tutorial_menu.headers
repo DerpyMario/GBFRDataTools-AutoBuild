@@ -7,16 +7,24 @@ add_column|ViewId3|hash_string
 add_column|ViewId4|hash_string
 add_column|QuestId|hex_uint
 add_column|CommandType|uint
-
-// (CommandType 6 with a value here and an ItemId in MultiPurposeId will give the amount of the item specified)
-add_column|CommandValue|uint
-
+add_column|CommandValue|uint     // (CommandType 6 with a value here and an ItemId in MultiPurposeId will give the amount of the item specified)
 add_column|IconPixelCountFromCenterLeftRight|float
 add_column|IconPixelCountFromCenterUpDown|float
 add_column|IconRotation|float
 add_column|Bool14|byte
+add_column|Bool15|byte           // (only active on the start of a tutorial, but not on all of them)
 
-// (only active on the start of a tutorial, but not on all of them)
-add_column|Bool15|byte
+set_min_version|2.0.0            // GBFR ER Closed Beta
+add_column|Unk16|int
+reset_min_version|
+
+set_min_version|2.0.0.2          // GBFR ER Demo
+add_column|Unk18|int
+add_column|Unk19|int
+add_column|Unk20|int
+add_column|Unk21|int
+reset_min_version|
+
 add_column|pad1|byte
 add_column|pad2|byte
+

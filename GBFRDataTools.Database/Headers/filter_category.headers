@@ -7,6 +7,12 @@ add_column|FilterOptionText6|hash_string
 add_column|FilterOptionText7|hash_string
 add_column|FilterOptionText8|hash_string
 add_column|FilterOptionText9|hash_string
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|FilterOptionText10|hash_string
+add_column|FilterOptionText11|hash_string
+reset_min_version|
+
 add_column|Key|hash_string
 add_column|FilterTitleText|hash_string
 
@@ -15,4 +21,3 @@ add_column|MultiSelect|int
 
 // changing it does nothing, but likely just there for counting? filters are refered to by the key column so... would almost suggest changing key to CategoryId, and this column to Key
 add_column|FilterCategoryId|int
-
