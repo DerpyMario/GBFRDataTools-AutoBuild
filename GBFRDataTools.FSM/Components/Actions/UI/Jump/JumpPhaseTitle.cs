@@ -13,4 +13,7 @@ public class JumpPhaseTitle : ActionComponent
 {
     [JsonIgnore]
     public override string ComponentName => nameof(JumpPhaseTitle);
+
+    [JsonPropertyName("isNotSetReturnTitleFlag_")]
+    public bool IsNotSetReturnTitleFlag { get; set; }
 }

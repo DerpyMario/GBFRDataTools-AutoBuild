@@ -192,6 +192,11 @@ public class FSMParser
                     // TODO
                     if (elem.Value.GetPropertyCount() != 0)
                     {
+                        foreach (var trans in elem.Value.EnumerateObject())
+                        {
+                            Transition transition = JsonSerializer.Deserialize<Transition>(trans.Value, DefaultJsonSerializerOptions.InstanceForRead);
+                        }
+
                         _logger?.LogWarning("Unsupported 'addTransition'");
                         HasErrors = true;
                     }
