@@ -49,10 +49,17 @@ public class GameDatabase
                 continue;
             }
 
-            DataTable dt = new DataTable();
-            dt.Read(tableFile, version, idDatabase);
+            try
+            {
+                DataTable dt = new DataTable();
+                dt.Read(tableFile, version, idDatabase);
 
-            Tables.Add(Path.GetFileNameWithoutExtension(tableFile), dt);
+                Tables.Add(Path.GetFileNameWithoutExtension(tableFile), dt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: Failed to read table {Path.GetFileNameWithoutExtension(tableFile)} - {ex.Message}");
+            }
         }
 
 #if DEBUG

@@ -43,7 +43,6 @@ public class DataTable
 
         Columns = TableMappingReader.ReadColumnMappings(hdrFile, version, out RowSize);
 
-
         byte[] file = File.ReadAllBytes(path);
         var sr = new SpanReader(file);
 
