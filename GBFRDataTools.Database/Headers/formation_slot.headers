@@ -8,7 +8,7 @@ add_column|PartyMemberCharaIdSpawnAsGuest1|hash_string
 add_column|PartyMemberCharaIdSpawnAsGuest2|hash_string
 add_column|PartyMemberCharaIdSpawnAsGuest3|hash_string
 
-add_column|Unk8|int
+add_column|Unk8|hex_uint
 add_column|Unk9|hex_uint
 add_column|Unk10|hex_uint
 

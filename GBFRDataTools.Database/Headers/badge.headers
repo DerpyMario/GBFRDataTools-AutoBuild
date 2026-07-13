@@ -9,7 +9,7 @@ add_column|CharacterCondition|hash_string
 reset_max_version|
 
 set_min_version|2.0.0       // GBFR ER Closed Beta
-add_column|Unk1|hash_string
+add_column|CharaId|hash_string
 add_column|CharacterCondition|hash_string
 add_column|RewardId|hash_string
 reset_min_version|
@@ -20,7 +20,7 @@ set_min_version|2.0.0       // GBFR ER Closed Beta
 add_column|Unk2|int
 add_column|Unk3|uint
 add_column|Unk4|uint
-add_column|Unk5|uint
+add_column|QuestId2|hex_uint
 reset_min_version|
 
 add_column|QuestId|hash_string
@@ -54,5 +54,5 @@ set_min_version|2.0.0       // GBFR ER Closed Beta
 add_column|Unk9|uint
 add_column|Unk10|uint
 add_column|Unk11|uint
-add_column|Unk12|uint
+add_column|IsEndlessRagnarok|uint
 reset_min_version|

@@ -33,8 +33,11 @@ add_column|Unk32|hash_string
 add_column|Unk33|hash_string
 add_column|Unk34|hash_string
 
-set_min_version|2.0.0.1     // GBFR ER Open Beta
-add_column|Unk35|hex_uint
-reset_min_version|
-
 add_column|CharaId|hash_string
+
+set_min_version|2.0.0.1     // GBFR ER Open Beta
+add_column|Unk35|byte
+add_column|Unk36|byte
+add_column|Unk37|byte
+add_column|Unk38|byte
+reset_min_version|

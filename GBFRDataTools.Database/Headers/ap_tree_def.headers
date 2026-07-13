@@ -38,7 +38,7 @@ add_column|Unk12|hash_string
 add_column|CharaId|hash_string
 add_column|LimitBonusParamIndex|uint
 add_column|MspCost|uint
-add_column|ReqWepDoubleUncapLevel|uint
+add_column|ReqWepTranscensionLevel|uint
 reset_min_version|
 
 add_column|ReqCharLevel|uint

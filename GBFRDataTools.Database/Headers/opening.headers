@@ -10,4 +10,4 @@ add_column|Key|hash_string
 add_column|Duration|float
 add_column|Unk11|int
 add_column|Unk12|int
-add_column|Unk13|int
+add_column|Unk13|hex_uint

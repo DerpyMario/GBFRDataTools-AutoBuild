@@ -1,16 +1,16 @@
 set_min_version|2.0.0       // GBFR ER Closed Beta
-add_column|Unk1|uint
-add_column|Unk2|uint
-add_column|Unk3|uint
-add_column|Unk4|uint
-add_column|Unk5|uint
-add_column|Unk6|uint
-add_column|Unk7|uint
-add_column|Unk8|uint
-add_column|Unk9|uint
-add_column|Unk10|uint
-add_column|Unk11|uint
-add_column|Unk12|uint
+add_column|ApTreeWepRebuild1Limit|uint
+add_column|ApTreeWepRebuild2Limit|uint
+add_column|ApTreeWepRebuild3Limit|uint
+add_column|ApTreeWepRebuild4Limit|uint
+add_column|ApTreeWepRebuild5Limit|uint
+add_column|ApTreeWepRebuild6Limit|uint
+add_column|Wep1TranscendenceLimit|uint
+add_column|Wep2TranscendenceLimit|uint
+add_column|Wep3TranscendenceLimit|uint
+add_column|Wep4TranscendenceLimit|uint
+add_column|Wep5TranscendenceLimit|uint
+add_column|Wep6TranscendenceLimit|uint
 reset_min_version|
 
 add_column|ApTreeWep1Limit|uint
@@ -21,7 +21,7 @@ add_column|ApTreeWep5Limit|uint
 add_column|ApTreeWep6Limit|uint
 
 set_min_version|2.0.0       // GBFR ER Closed Beta
-add_column|Unk19|uint
+add_column|Unk19|uint // Maybe damage cap limits???
 add_column|Unk20|uint
 add_column|Unk21|uint
 reset_min_version|
@@ -30,8 +30,8 @@ add_column|PWRUpperboundLimitKey|uint
 
 // >= 2.0.0
 set_min_version|2.0.0       // GBFR ER Closed Beta
-add_column|Unk23|uint
-add_column|Unk24|uint
+add_column|MasterSyleLimit|uint
+add_column|MasterLevelLimit|uint
 add_column|PWRLimit|uint
 add_column|MediationOvermasteryLevelLimit|uint
 add_column|CharaStatusFateIdLimit|uint

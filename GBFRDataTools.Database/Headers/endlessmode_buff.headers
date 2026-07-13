@@ -1,16 +1,16 @@
 add_column|Unk1|raw_string|0x08
 add_column|Unk2|raw_string|0x08
-add_column|Unk3|hash_string
-add_column|Unk4|hash_string
+add_column|StatusId1|hash_string
+add_column|StatusId2|hash_string
 add_column|Unk5|hash_string
-add_column|Unk6|hash_string
-add_column|Unk7|hash_string
+add_column|StatusId3|hash_string
+add_column|StatusId4|hash_string
 add_column|Unk8|hash_string
-add_column|Unk9|hash_string
-add_column|Unk10|hash_string
+add_column|StatusId5|hash_string
+add_column|StatusId6|hash_string
 add_column|Unk11|hash_string
-add_column|Unk12|hash_string
-add_column|Unk13|hash_string
+add_column|StatusId7|hash_string
+add_column|StatusId8|hash_string
 add_column|Unk14|hash_string
 
 add_column|Unk15|int
@@ -114,13 +114,13 @@ add_column|Byte7|byte
 add_column|Byte8|byte
 add_column|Unk101|int
 
-add_column|Unk102|hash_string
-add_column|Unk103|hash_string
-add_column|Unk104|hash_string
+add_column|BuffExplanation2|hash_string
+add_column|BuffExplanation|hash_string
+add_column|BuffName|hash_string
 add_column|Unk105|hash_string
 add_column|Unk106|hash_string
 
-add_column|Unk107|int
+add_column|KeyMaybe|int
 add_column|Unk108|int
 add_column|Unk109|int
 add_column|Byte9|byte

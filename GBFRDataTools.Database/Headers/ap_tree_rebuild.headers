@@ -27,7 +27,7 @@ add_column|Unk12|hash_string
 add_column|CharaId|hash_string
 add_column|LimitBonusParamIndex|uint
 add_column|MspCost|uint
-add_column|ReqWepDoubleUncapLevel|uint
+add_column|ReqWepTranscensionLevel|uint
 add_column|ReqCharLevel|uint
 add_column|ReqQuestId|hex_uint
 add_column|IsBigNode|uint
@@ -37,6 +37,6 @@ add_column|NodeGridLocation|uint
 
 add_column|ReqWepLevel|uint
 add_column|ReqWepUncapLevel|uint
-add_column|ReqWepAwakeLevelMaybe|uint
+add_column|ReqWepAwakeLevel|uint
 add_column|Unk13|uint
 add_column|DiffSeparatorMaybe|uint

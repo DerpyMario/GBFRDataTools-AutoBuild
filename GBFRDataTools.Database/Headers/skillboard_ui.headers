@@ -3,24 +3,24 @@ add_column|AbilityId1|hash_string
 add_column|AbilityId2|hash_string
 add_column|AbilityId3|hash_string
 add_column|AbilityId4|hash_string
-add_column|Key|hash_string
-add_column|Unk17|hash_string      // Key seems to be shared with skillboard_effect
-add_column|Unk18|hash_string
 
 set_min_version|2.0.0.2       // GBFR ER Demo
-add_column|Unk20|hash_string
-add_column|Unk21|hash_string
-add_column|Unk22|hash_string
-add_column|Unk23|hash_string
-add_column|Unk24|hash_string
-add_column|Unk25|hash_string
-add_column|Unk26|hash_string
-add_column|Unk27|hash_string
-add_column|Unk28|hash_string
-add_column|Unk29|hash_string
-add_column|Unk30|hash_string
-add_column|Unk31|hash_string
+add_column|AbilityId5|hash_string
+add_column|AbilityId6|hash_string
+add_column|AbilityId7|hash_string
+add_column|AbilityId8|hash_string
+add_column|AbilityId9|hash_string
+add_column|AbilityId10|hash_string
+add_column|AbilityId11|hash_string
+add_column|AbilityId12|hash_string
+add_column|AbilityId13|hash_string
+add_column|AbilityId14|hash_string
+add_column|AbilityId15|hash_string
+add_column|AbilityId16|hash_string
 reset_min_version|
 
+add_column|Key|hash_string      // Key seems to be shared with skillboard_effect
+add_column|Unk17|hash_string
+add_column|Unk18|hash_string
 add_column|Unk19|int
 

@@ -10,8 +10,8 @@ add_column|RewardPointIdGold|hash_string
 add_column|RewardPointIdMSP|hash_string
 
 set_min_version|2.0.0       // GBFR ER Closed Beta
-add_column|RewardPointIdUnk1|int
-add_column|RewardPointIdUnk2|int
+add_column|RewardPointIdUnk1|hash_string
+add_column|RewardPointIdUnk2|hash_string
 reset_min_version|
 
 add_column|Lot1ExclusionChance|uint

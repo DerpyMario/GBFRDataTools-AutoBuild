@@ -12,6 +12,11 @@ add_column|Lv8Value|float
 add_column|Lv9Value|float
 add_column|Lv10Value|float
 add_column|Key|hash_string
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
+add_column|Unk20|int
+reset_min_version|
+
 add_column|NameFormat|hash_string
 add_column|FullName|hash_string
 
@@ -25,5 +30,4 @@ add_column|DisplayNumberMultiplier|int
 add_column|Unk19|int
 
 set_min_version|2.0.0       // GBFR ER Closed Beta
-add_column|Unk20|int
 add_column|Unk21|int

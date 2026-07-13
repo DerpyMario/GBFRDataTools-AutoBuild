@@ -20,7 +20,7 @@ add_column|Unk18|hash_string
 add_column|Unk19|hash_string
 add_column|Temp1|hash_string
 add_column|Temp2|hash_string
-add_column|Temp3|hash_string
+add_column|Temp3|int
 add_column|Unk20|int
 add_column|Unk21|int
 add_column|Unk22|int
@@ -42,7 +42,7 @@ add_column|Unk36|int
 add_column|Unk37|int
 add_column|UnkColor38|hex_uint
 add_column|Unk39|int
-add_column|Unk40|uint
+add_column|Unk40|hex_uint
 add_column|Unk41|int
 add_column|Unk42|byte
 add_column|Unk43|byte
