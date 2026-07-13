@@ -12,6 +12,6 @@ add_column|TownStageMaybe|hex_uint
 add_column|QuestId|hex_uint
 add_column|LoadingLotId|hash_string
 
-set_version|2.0.0
+set_min_version|2.0.0
 add_column|UnkQuestId|hex_uint
 add_column|Unk2|uint

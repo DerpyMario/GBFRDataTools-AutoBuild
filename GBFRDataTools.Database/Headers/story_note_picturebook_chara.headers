@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////
-// 2.0.2 (GBFR ER Release)
+// 2.0.2
 /////////////////////////////////////////////////////////////
-set_min_version|2.0.2
+set_min_version|2.0.2       // GBFR ER Release
 add_column|CharaId1|raw_string|0x08
 add_column|CharaId2|raw_string|0x08
 add_column|UnkCutscene1|hash_string

@@ -7,11 +7,11 @@ add_column|PendulumPurchasable|hash_string
 add_column|ItemPurchasable|hash_string
 add_column|ItemTierMapId|hash_string
 add_column|Key|uint             // Shop group/category
+
+set_min_version|2.0.0       // GBFR ER Closed Beta
 add_column|FeaturedWeight|uint
 add_column|IsRefreshable|int
 add_column|MaxStockForRefresh|int
-
-set_min_version|2.0.0       // GBFR ER Closed Beta
 add_column|IsRandomFeatured|uint
 add_column|AmountRefreshed|uint
 add_column|SortOrder|uint
@@ -22,10 +22,13 @@ add_column|Unk18|uint
 reset_min_version|
 
 set_max_version|1.3.2
-add_column|MaxStockOrAmountRefreshed|uint
+add_column|IsRefreshable|int
+add_column|MaxStockForRefresh|int
+add_column|MaxStockOrAmountRefreshed|int
 add_column|IsRandomFeatured|uint
 add_column|FeaturedWeight|uint
 add_column|GemLevel|uint
+add_column|Unk16|uint
 add_column|Unk17|uint
 add_column|SortOrder|uint
 reset_max_version|

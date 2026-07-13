@@ -50,6 +50,7 @@ reset_max_version|
 // <= 1.3.2
 /////////////////////////////////////////////////////////////
 set_max_version|1.3.2
+add_column|IconFileNameId|raw_string|0x10
 add_column|AccompanyingStatuses1|hash_string  // (translates Key, and provides the buffs listed)
 add_column|AccompanyingStatuses2|hash_string
 add_column|AccompanyingStatuses3|hash_string

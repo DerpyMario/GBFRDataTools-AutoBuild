@@ -6,5 +6,5 @@ add_column|Unk5|int
 add_column|Unk6|int
 add_column|float7|float
 
-set_version|2.0.0
+set_min_version|2.0.0
 add_column|Unk8|uint
