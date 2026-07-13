@@ -38,6 +38,37 @@ public class IdDatabase
                 _hashesToIds.TryAdd(XXHash32Custom.Hash(spl[2]), spl[2]);
             }
         }
+
+#if DEBUG
+        var r2ModsPath = Environment.GetEnvironmentVariable("RELOADEDIIMODS");
+        using var sr2 = new StreamReader($"{r2ModsPath}/gbfrelink.utility.filenamelogger/logs/hashlist.txt");
+
+        while (!sr2.EndOfStream)
+        {
+            string? line = sr2.ReadLine();
+            if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
+                continue;
+
+            string[] spl = line.Split('|');
+            if (spl.Length == 2)
+            {
+                uint hash = uint.Parse(spl[0], System.Globalization.NumberStyles.HexNumber);
+                _hashesToIds.TryAdd(hash, spl[1]);
+            }
+        }
+
+        /*
+        using var sr3 = new StreamReader(@$"<file>");
+        while (!sr3.EndOfStream)
+        {
+            string? line = sr3.ReadLine();
+            if (string.IsNullOrWhiteSpace(line) || line.StartsWith("//"))
+                continue;
+
+            _hashesToIds.TryAdd(XXHash32Custom.Hash(line), line);
+        }
+        */
+#endif
     }
 
     public void AddIds(IEnumerable<string> ids)

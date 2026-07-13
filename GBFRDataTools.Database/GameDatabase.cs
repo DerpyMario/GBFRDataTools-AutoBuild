@@ -54,6 +54,11 @@ public class GameDatabase
 
             Tables.Add(Path.GetFileNameWithoutExtension(tableFile), dt);
         }
+
+#if DEBUG
+        Directory.CreateDirectory("debug");
+        File.WriteAllLines("debug/table_ids.txt", TableRow.KnownHashes.Select(e => $"{e.Key:X8}|ID|{e.Value}"));
+#endif
     }
 
     /// <summary>

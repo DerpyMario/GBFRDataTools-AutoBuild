@@ -10,7 +10,11 @@ namespace GBFRDataTools.Database.Entities;
 
 public class TableRow
 {
-    public List<object> Cells { get; set; } = new List<object>();
+#if DEBUG
+    public static Dictionary<uint, string> KnownHashes = [];
+#endif
+
+    public List<object> Cells { get; set; } = [];
 
     public void ReadRow(List<TableColumn> columns, Span<byte> rowBytes, IdDatabase? idDatabase)
     {
@@ -30,7 +34,12 @@ public class TableRow
                 case DBColumnType.HashString:
                     uint hash = sr.ReadUInt32();
                     if (idDatabase is not null && idDatabase.Hashes.TryGetValue(hash, out string? val))
+                    {
+#if DEBUG
+                        KnownHashes.TryAdd(hash, val);
+#endif
                         Cells.Add(val);
+                    }
                     else
                         Cells.Add(hash.ToString("X8"));
                     break;
