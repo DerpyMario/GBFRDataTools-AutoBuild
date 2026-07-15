@@ -1,11 +1,5 @@
 # GBFRDataTools
 
-> [!WARNING]  
-> ### **No research will be made, or PRs to be accepted in regards to the Endless Ragnarok Closed Beta.**
->
-> Work will resume some time after the release of the DLC.
-
-
 <div width="100%">
   <a href="https://ko-fi.com/nenkai" width="40%">
     <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-Fi">
@@ -43,7 +37,7 @@ Features:
 
 ## Research Notes
 
-* Currently, 98.3% of all game paths are known (v1.3.2)
+* Currently, 391699/408165 (95.97%) of all game paths are known (v2.0.0)
 * It is possible to run the game fully unpacked by removing `data.i`, however all game files need to be extracted in a `data` folder - requires the majority of game paths mapped out which is not the case yet.
 * `data.i` among other file formats such as models uses FlatBuffers (Cy's internal handler is named FlatArk). It is fully understood and documented in [IndexFile.fbs](https://github.com/Nenkai/GBFRDataTools/blob/master/GBFRDataTools.FlatBuffers/IndexFile.fbs).
 * Data/Archive file #2 is hardcoded not to be read from. It is only used on console versions.
