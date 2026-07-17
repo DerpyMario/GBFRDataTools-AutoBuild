@@ -2,9 +2,6 @@ name: Windows Build
 
 on: [workflow_dispatch]
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: windows-11-vs2026-arm
