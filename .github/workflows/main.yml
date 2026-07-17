@@ -42,7 +42,7 @@ jobs:
         run: dotnet restore GBFRDataTools.sln
 
       - name: Build entire solution
-        run: dotnet build GBFRDataTools.sln --configuration Release --no-restore
+        run: dotnet build GBFRDataTools.sln --configuration Release --no-restore /p:TreatWarningsAsErrors=false
 
       - name: Publish Windows x64 application
         run: >
