@@ -14,11 +14,14 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    
     - name: Restore dependencies
       run: dotnet restore
     
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
+    - name: Build Solution
+      run: msbuild -p:Configuration=Release -p:Platform=x64
     
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal
