@@ -2,35 +2,66 @@ name: Windows Build
 
 on: [workflow_dispatch]
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    runs-on: windows-latest
-    
+    runs-on: windows-11-vs2026-arm
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-    
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-    
-    - name: Restore dependencies
-      run: dotnet restore
-    
-    - name: Build Solution
-      run: msbuild -p:Configuration=Release -p:Platform=x64
-    
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
-    
-    - name: Publish
-      run: dotnet publish --configuration Release --output ./publish
-    
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Install .NET SDKs
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Show installed SDKs
+        run: dotnet --list-sdks
+
+      - name: Check submodules
+        run: git submodule status --recursive
+
+      - name: Restore NuGet packages
+        run: dotnet restore GBFRDataTools.sln
+
+      - name: Build entire solution
+        run: dotnet build GBFRDataTools.sln --configuration Release --no-restore
+
+      - name: Publish Windows x64 application
+        run: >
+          dotnet publish
+          GBFRDataTools\GBFRDataTools.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          --output artifacts\GBFRDataTools-win-x64
+
+      - name: Upload compiled application
+        uses: actions/upload-artifact@v7
+        with:
+          name: GBFRDataTools-win-x64
+          path: artifacts\GBFRDataTools-win-x64
+          if-no-files-found: error
+
+      - name: Add SixLabors MyGet feed
+        run: >
+          dotnet nuget add source
+          "https://www.myget.org/F/sixlabors/api/v3/index.json"
+          --name "sixlabors-myget"
+
+      - name: Show NuGet sources
+        run: dotnet nuget list source
+
+      - name: Restore NuGet packages
+        run: dotnet restore GBFRDataTools.sln
       with:
         name: windows-build
         path: ./publish
