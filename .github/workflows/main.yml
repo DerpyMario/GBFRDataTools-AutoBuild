@@ -29,6 +29,15 @@ jobs:
       - name: Check submodules
         run: git submodule status --recursive
 
+      - name: Add SixLabors MyGet feed
+        run: >
+          dotnet nuget add source
+          "https://www.myget.org/F/sixlabors/api/v3/index.json"
+          --name "sixlabors-myget"
+
+      - name: Show NuGet sources
+        run: dotnet nuget list source
+
       - name: Restore NuGet packages
         run: dotnet restore GBFRDataTools.sln
 
@@ -50,18 +59,6 @@ jobs:
           name: GBFRDataTools-win-x64
           path: artifacts\GBFRDataTools-win-x64
           if-no-files-found: error
-
-      - name: Add SixLabors MyGet feed
-        run: >
-          dotnet nuget add source
-          "https://www.myget.org/F/sixlabors/api/v3/index.json"
-          --name "sixlabors-myget"
-
-      - name: Show NuGet sources
-        run: dotnet nuget list source
-
-      - name: Restore NuGet packages
-        run: dotnet restore GBFRDataTools.sln
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
