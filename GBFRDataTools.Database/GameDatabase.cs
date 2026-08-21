@@ -1,4 +1,5 @@
 ﻿using GBFRDataTools.Database.Entities;
+using GBFRDataTools.Hashing;
 
 using System;
 using System.Collections.Generic;
@@ -42,10 +43,10 @@ public class GameDatabase
 
         foreach (string tableFile in Directory.GetFiles(dir, "*.tbl"))
         {
-            string? hdr = TableMappingReader.GetHeadersFilePath(Path.GetFileNameWithoutExtension(tableFile));
-            if (string.IsNullOrEmpty(hdr))
+            var tableName = Path.GetFileNameWithoutExtension(tableFile);
+            if (!DynamicTableMappingReader.Instance.ContainsTable(tableName))
             {
-                Console.WriteLine($"WARNING: Skipping {Path.GetFileNameWithoutExtension(tableFile)}, no layout exists");
+                Console.WriteLine($"WARNING: Skipping {tableName}, no layout exists");
                 continue;
             }
 
@@ -54,11 +55,11 @@ public class GameDatabase
                 DataTable dt = new DataTable();
                 dt.Read(tableFile, version, idDatabase);
 
-                Tables.Add(Path.GetFileNameWithoutExtension(tableFile), dt);
+                Tables.Add(tableName, dt);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ERROR: Failed to read table {Path.GetFileNameWithoutExtension(tableFile)} - {ex.Message}");
+                Console.WriteLine($"ERROR: Failed to read table {tableName} - {ex.Message}");
             }
         }
 
@@ -72,12 +73,16 @@ public class GameDatabase
     /// Saves tables (.tbl) to the specified folder.
     /// </summary>
     /// <param name="dir"></param>
-    public void SaveTo(string dir)
+    /// <param name="tables">Tables to convert, if left null, all.</param>
+    public void SaveTo(string dir, IEnumerable<string>? tables = null)
     {
         Directory.CreateDirectory(dir);
 
         foreach (var table in Tables)
         {
+            if (tables is not null && tables?.Contains(table.Key) == false)
+                continue;
+
             table.Value.Save(Path.Combine(dir, $"{table.Key}.tbl"));
         }
     }
