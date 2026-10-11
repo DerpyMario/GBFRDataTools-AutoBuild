@@ -1,4 +1,4 @@
-﻿using GBFRDataTools.FSM.Components;
+﻿using GBFRDataTools.FSM.Components.Conditions;
 
 using System;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ public class Transition
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     [JsonPropertyName("end_node_name")]
-    public string EndNodeName { get; set; }
+    public string? EndNodeName { get; set; }
 
     /// <summary>
     /// Not used by the game or present at all, using this for external third-party editors.
@@ -67,6 +67,12 @@ public class Transition
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     [JsonPropertyName("end_node_boundary_box")]
     public Vector4 EndNodeBoundaryBox { get; set; }
+
+    /// <summary>
+    /// Not used by the game or present at all, used to determine which template this transition originates from (if any).
+    /// </summary>
+    [JsonIgnore]
+    public string? TemplateSource { get; set; }
 
     public Transition(uint toNodeGuid, uint fromNodeGuid)
     {

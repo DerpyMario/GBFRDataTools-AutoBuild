@@ -87,4 +87,9 @@ public class ShotVfxAction : ActionComponent
     [Description("Added in Endless Ragnarok.")]
     [GameSupport(GameVersion.EndlessRagnarok)]
     public bool IsSummon { get; set; } = false;
+
+    public override string? GetCaption()
+    {
+        return $"ObjId: {(eObjIdType)(EffectObjId & 0xFFFF0000)}{EffectObjId & 0xFFFF:X}, EffectId: {EffectId}";
+    }
 }

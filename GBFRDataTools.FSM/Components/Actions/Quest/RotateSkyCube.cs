@@ -9,6 +9,7 @@ using System.ComponentModel;
 using GBFRDataTools.Entities.Base;
 using GBFRDataTools.FSM.Entities;
 using System.Numerics;
+using GBFRDataTools.Entities.Parameters.Base;
 
 namespace GBFRDataTools.FSM.Components.Actions.Quest;
 
@@ -26,11 +27,8 @@ public class RotateSkyCube : QuestActionComponent
     [JsonPropertyName("easeParam_")]
     public EaseParam EaseParam { get; set; } = new();
 
-
-    public override string ToString()
+    public override string? GetCaption()
     {
-        string str = $"{ComponentName}";
-
-        return str;
+        return $"Rotate: {Rotate:F2}, Time: {Time}";
     }
 }

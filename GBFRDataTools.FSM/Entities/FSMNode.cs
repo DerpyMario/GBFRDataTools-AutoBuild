@@ -77,7 +77,7 @@ public class FSMNode
 
     // "Emulation" code starts from here
     [JsonIgnore]
-    public FSMNode SelectedNode { get; set; }
+    public FSMNode? SelectedNode { get; set; }
 
     [JsonIgnore]
     public int Flag;
@@ -126,7 +126,11 @@ public class FSMNode
 
     // Not part of the game's struct, but useful to have
     [JsonIgnore]
-    public int LayerIndex;
+    public int LayerIndex { get; set; }
+
+    // To keep track whether this node is part of a template FSM
+    [JsonIgnore]
+    public string? TemplateSource { get; set; }
     #endregion
 
     public override string ToString()
@@ -259,7 +263,7 @@ public class FSMNode
     // 1.1.1 - 1418470C0
     public FSMNode SelectNode(uint guid)
     {
-        FSMNode target = null;
+        FSMNode? target = null;
         foreach (FSMNode child in Children)
         {
             if (child.Guid == guid)

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GBFRDataTools.Entities;
+
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,9 +18,16 @@ public class Em7001CatastropheAction : ActionComponent
     public override string ComponentName => nameof(Em7001CatastropheAction);
 
     [JsonPropertyName("side_")]
-    public int Side { get; set; } = 0; // Offset 0x7C
+    public int Side { get; set; } = 0;
 
-    public Em7001CatastropheAction()
-    {
-    }
+    [JsonPropertyName("frontType_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok.")]
+    public int FrontType { get; set; } = 0;
+
+    [JsonPropertyName("slideLength_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok.")]
+    public float SlideLength { get; set; } = 0f;
+
 }

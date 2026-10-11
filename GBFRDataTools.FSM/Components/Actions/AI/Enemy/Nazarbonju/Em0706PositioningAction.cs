@@ -1,8 +1,10 @@
-﻿using GBFRDataTools.Entities.Parameters.Base;
+﻿using GBFRDataTools.Entities;
+using GBFRDataTools.Entities.Parameters.Base;
 using GBFRDataTools.FSM.Components.Actions.AI.Enemy.Quakadiles;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -19,21 +21,22 @@ public class Em0706PositioningAction : Em0706BaseAction
     public override string ComponentName => nameof(Em0706PositioningAction);
 
     [JsonPropertyName("homingAngleFront_")]
-    public float HomingAngleFront { get; set; } = 8f; // Offset 0x50
+    public float HomingAngleFront { get; set; } = 8f; 
 
     [JsonPropertyName("homingAngleLR_")]
-    public float HomingAngleLR { get; set; } = 5f; // Offset 0x54
+    public float HomingAngleLR { get; set; } = 5f; 
 
     [JsonPropertyName("homingAngleBack_")]
-    public float HomingAngleBack { get; set; } = 3f; // Offset 0x58
+    public float HomingAngleBack { get; set; } = 3f; 
 
     [JsonPropertyName("movementRate_")]
-    public float MovementRate { get; set; } = 1f; // Offset 0x5C
+    public float MovementRate { get; set; } = 1f; 
 
     [JsonPropertyName("isBattleAreaCenterMove_")]
-    public bool IsBattleAreaCenterMove { get; set; } = false; // Offset 0x60
+    public bool IsBattleAreaCenterMove { get; set; } = false;
 
-    public Em0706PositioningAction()
-    {
-    }
+    [JsonPropertyName("chaosMotSpeed_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok")]
+    public float ChaosMotSpeed { get; set; } = 1.3f;
 }

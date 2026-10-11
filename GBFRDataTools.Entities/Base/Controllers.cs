@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace GBFRDataTools.Entities.Base;
 
-public class Controllers<T> : IEnumerable<T>
+[TypeConverter(typeof(ExpandableObjectConverter))]
+public class Controllers<T> : BindingList<T>
 {
     public List<T> Elements { get; set; } = [];
 
@@ -20,10 +21,5 @@ public class Controllers<T> : IEnumerable<T>
     public IEnumerator<T> GetEnumerator()
     {
         return ((IEnumerable<T>)Elements).GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return ((IEnumerable)Elements).GetEnumerator();
     }
 }

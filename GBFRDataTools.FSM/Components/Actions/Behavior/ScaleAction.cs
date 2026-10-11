@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
+using GBFRDataTools.Entities.Parameters.Base;
 using GBFRDataTools.FSM.Entities;
 
 namespace GBFRDataTools.FSM.Components.Actions.Behavior;
@@ -40,4 +41,9 @@ public class ScaleAction : ActionComponent
 
     [JsonPropertyName("isMulScale_")]
     public bool IsMulScale { get; set; } = false;
+
+    public override string? GetCaption()
+    {
+        return $"Scale: {ScaleStart:F2}->{ScaleEnd:F2}";
+    }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GBFRDataTools.Entities;
+
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,21 +18,28 @@ public class Em2100StepAction : ActionComponent
     public override string ComponentName => nameof(Em2100StepAction);
 
     [JsonPropertyName("selectStepType_")]
-    public int SelectStepType { get; set; } = 0; // Offset 0x38
+    public int SelectStepType { get; set; } = 0; 
 
     [JsonPropertyName("isNextStep_")]
-    public bool IsNextStep { get; set; } = false; // Offset 0x3C
+    public bool IsNextStep { get; set; } = false; 
 
     [JsonPropertyName("homingAngle_")]
-    public float HomingAngle { get; set; } = 10f; // Offset 0x40
+    public float HomingAngle { get; set; } = 10f; 
 
     [JsonPropertyName("motionMovementRate_")]
-    public float MotionMovementRate { get; set; } = 2f; // Offset 0x44
+    public float MotionMovementRate { get; set; } = 2f; 
 
     [JsonPropertyName("backMotionAngle_")]
-    public float BackMotionAngle { get; set; } = 135f; // Offset 0x48
+    public float BackMotionAngle { get; set; } = 135f;
 
-    public Em2100StepAction()
-    {
-    }
+    [JsonPropertyName("isTargetStageCenter_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok.")]
+    public bool IsTargetStageCenter { get; set; } = false;
+
+    [JsonPropertyName("stageCenterDirAddRotY_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok.")]
+    public float StageCenterDirAddRotY { get; set; } = 0f;
+
 }

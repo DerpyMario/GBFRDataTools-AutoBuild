@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
+using GBFRDataTools.Entities.Parameters.Base;
 using GBFRDataTools.FSM.Entities;
 
 namespace GBFRDataTools.FSM.Components.Actions.Behavior;
@@ -28,4 +29,9 @@ public class AlphaAction : ActionComponent
 
     [JsonPropertyName("applyToChildRecursively_")]
     public bool ApplyToChildRecursively { get; set; } = false;
+
+    public override string? GetCaption()
+    {
+        return $"Alpha: {AlphaStart}->{AlphaEnd}";
+    }
 }

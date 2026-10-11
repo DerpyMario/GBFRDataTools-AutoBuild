@@ -12,30 +12,15 @@ using System.Threading.Tasks;
 
 namespace GBFRDataTools.FSM.Components.Actions.AI.PlayerAI;
 
-[Description("""
-    Moves the AI towards a point, with a variety of behavior types. Simulates player inputs, relying on actions ending to move properly
-    Summary: if "UseBlackBoardValue", "Type" + "BoolName", otherwise "Type" + "Dist"
-    """)]
 public class AIMoveAction : ActionComponent
 {
     [JsonIgnore]
     public override string ComponentName => nameof(AIMoveAction);
 
     [JsonPropertyName("type_")]
-    [Description("""
-        Movement type. 
-        0: To Player Character
-        1: Towards Targeted Point
-        2: Towards ~15 Units from Targeted Point
-            If too close, will walk away, if too far, will walk towards
-            Smaller "Dist" is further from target
-        3: Towards Map Origin
-        4: Towards Targeted Point at Time of Call
-        """)]
     public AIMoveActionType Type { get; set; } = AIMoveActionType.ReturnToPlayer;
 
     [JsonPropertyName("dist_")]
-    [Description("Distance to travel.")]
     public float Dist { get; set; } = 1.0f;
 
     [JsonPropertyName("useBlackBoardValue_")]
@@ -111,7 +96,7 @@ public class AIMoveAction : ActionComponent
     [GameSupport(GameVersion.EndlessRagnarok)]
     public bool IsUseDashInBattle { get; set; } = false;
 
-    public override string GetCaption()
+    public override string? GetCaption()
     {
         return $"{Utils.GetEnumDescription(Type)} ({Dist}m)";
     }
@@ -120,28 +105,28 @@ public class AIMoveAction : ActionComponent
 public enum AIMoveActionType
 {
     // 0xB597EE3
-    [Description("To Player Character (Type 0)")]
+    [Description("To Player Character (Type 0) - Var 0xB597EE3")]
     ReturnToPlayer = 0,
 
     /// <summary>
     /// Move towards target using distance
     /// </summary>
     // 0x1B23CF78
-    [Description("Towards Targeted Point (Type 1)")]
+    [Description("Towards Targeted Point (Type 1) - Var 0x1B23CF78")]
     TowardsTargetTracked = 1,
 
     /// <summary>
     /// Move away from target using distance
     /// </summary>
     // 0x12F4D95E
-    [Description("Away from target (Type 2)")]
+    [Description("Away from target (Type 2) - Var PlayerAI_TargetPoint")]
     MoveType2_Away = 2,
 
     // 0xEAA53141
-    [Description("Towards Map Origin (Type 3)")]
+    [Description("Towards Map Origin (Type 3) - Var 0xEAA53141")]
     TowardsMapOrigin = 3,
 
     // 0xDE2BB15E (AIMoveAction), 0x8CB68271 (AIBattleWaitAction)
-    [Description("Towards Targeted Point at Time of Call (Type 4)")]
+    [Description("Towards Targeted Point at Time of Call (Type 4) - Var 0xDE2BB15E")]
     TargetPositionAtTimeOfCall = 4
 }
