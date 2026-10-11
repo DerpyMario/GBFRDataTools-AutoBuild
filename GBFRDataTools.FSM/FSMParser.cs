@@ -13,6 +13,7 @@ using GBFRDataTools.Entities.Base;
 using GBFRDataTools.FSM.Components;
 using GBFRDataTools.FSM.Components.Actions.UI;
 using GBFRDataTools.FSM.Components.Actions.UI.Dialog;
+using GBFRDataTools.FSM.Components.Conditions;
 using GBFRDataTools.FSM.Components.Conditions.UI.Pause;
 using GBFRDataTools.FSM.Entities;
 
@@ -71,7 +72,7 @@ public class FSMParser
         }
     }
 
-    //public static SortedDictionary<string, Dictionary<string, SortedDictionary<int, EnumString>>> _compToEnums = [];
+    // public static SortedDictionary<string, Dictionary<string, SortedDictionary<int, EnumString>>> _compToEnums = [];
 
     public FSMParser(ILoggerFactory? loggerFactory = null, string baseDir = "")
     {
@@ -92,7 +93,7 @@ public class FSMParser
         await Parse(File.ReadAllBytes(file), file.EndsWith(".msg"));
     }
 
-    public delegate Task<string?> LocateFSMFileDelegate(string file);
+    public delegate Task<string?> LocateFSMFileDelegate(string className, string fsmName);
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //                   BIG NOTE
@@ -102,6 +103,7 @@ public class FSMParser
     // so "FromNodeGuid" or "FromGuid" = TARGET NODE!! Not SOURCE!!
     //
     // Hammer this into your brain!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     public async Task Parse(byte[] data, bool asMessagePack = false, LocateFSMFileDelegate? onRequestNotFoundBaseFile = null)
     {
@@ -121,6 +123,7 @@ public class FSMParser
         // The game breaks this down into two passes:
         // 1. Making a list of generic nodes to parse, with some nodes pre-processed
         // 2. Actually parsing those nodes
+        // In other words the process here is reverse-engineered from what the game does
 
         HashSet<uint> ignoredComponents = []; // Component guids
         HashSet<uint> enableBaseAllTransitions = []; // Node guids for transition FromGuid (override transitions)
@@ -332,6 +335,10 @@ public class FSMParser
 
                         string file = $"system/FSM/{className}/{className}_{fsmName}_fsm_ingame.msg"; // system/FSM/{0}/{0}_{1}_fsm_ingame.yml
                         string? path = Path.Combine(_baseDir ?? string.Empty, file);
+
+                        // The game would normally has no problems locating a file.
+                        // But if we load from an editor, we gotta provide a way to manually locate template/base fsms
+                        // We expose a callback for this.
                         if (string.IsNullOrWhiteSpace(_baseDir) || !File.Exists(path))
                         {
                             if (onRequestNotFoundBaseFile is null)
@@ -341,7 +348,7 @@ public class FSMParser
                                 return;
                             }
 
-                            path = await onRequestNotFoundBaseFile($"{className}_{fsmName}_fsm_ingame.msg");
+                            path = await onRequestNotFoundBaseFile(className, fsmName);
                             if (string.IsNullOrWhiteSpace(path))
                             {
                                 _logger?.LogError("Base FSM file '{}' not found. Bailing FSM load.", file);
@@ -350,7 +357,9 @@ public class FSMParser
                             }
                         }
 
-                        await BaseFSMParser.Parse(File.ReadAllBytes(path), asMessagePack: true);
+                        string source = $"{className}_{fsmName}_fsm_ingame";
+                        await BaseFSMParser.Parse(File.ReadAllBytes(path), asMessagePack: true, onRequestNotFoundBaseFile);
+
 
                         // Essentially, we merge the child fsm with current fsm (this is what the game does)
 
@@ -369,6 +378,7 @@ public class FSMParser
                             if (enableBaseTransitionsPairs.Contains((transition.ToNodeGuid, transition.FromNodeGuid)))
                                 continue;
 
+                            transition.TemplateSource = source; // Not part of the game
                             NormalTransitions.Add(transition);
                         }
 
@@ -377,6 +387,7 @@ public class FSMParser
                             if (enableBaseAllTransitions.Contains(transition.FromNodeGuid))
                                 continue;
 
+                            transition.TemplateSource = source; // Not part of the game
                             OverrideTransitions.Add(transition);
                         }
 
@@ -391,6 +402,8 @@ public class FSMParser
                             // Link up transitions for each node
                             foreach (FSMNode node in layer)
                             {
+                                node.TemplateSource = source; // Not part of the game, but we do this to keep track of if a node is part of a template
+
                                 // Normal/End/Failed
                                 int count = node.RegularTransitions.Count;
                                 for (int i = 0; i < count; i++)
@@ -398,6 +411,7 @@ public class FSMParser
                                     var nodeTransition = node.RegularTransitions[i];
                                     foreach (Transition trans in NormalTransitions)
                                     {
+                                        trans.TemplateSource = source; // Not part of the game
                                         if (trans.ToNodeGuid == nodeTransition.ToNodeGuid && trans.FromNodeGuid == nodeTransition.FromNodeGuid)
                                             node.AddTransition(trans);
                                     }
@@ -409,6 +423,7 @@ public class FSMParser
                                     var nodeTransition = node.EndTransitions[i];
                                     foreach (Transition trans in NormalTransitions)
                                     {
+                                        trans.TemplateSource = source; // Not part of the game
                                         if (trans.ToNodeGuid == nodeTransition.ToNodeGuid && trans.FromNodeGuid == nodeTransition.FromNodeGuid)
                                             node.AddTransition(trans);
                                     }
@@ -420,6 +435,7 @@ public class FSMParser
                                     var nodeTransition = node.FailedTransitions[i];
                                     foreach (Transition trans in NormalTransitions)
                                     {
+                                        trans.TemplateSource = source; // Not part of the game
                                         if (trans.ToNodeGuid == nodeTransition.ToNodeGuid && trans.FromNodeGuid == nodeTransition.FromNodeGuid)
                                             node.AddTransition(trans);
                                     }
@@ -432,6 +448,7 @@ public class FSMParser
                                     var nodeTransition = node.OverrideTransitions[i];
                                     foreach (Transition trans in OverrideTransitions)
                                     {
+                                        trans.TemplateSource = source; // Not part of the game
                                         if (trans.ToNodeGuid == nodeTransition.ToNodeGuid && trans.FromNodeGuid == nodeTransition.FromNodeGuid)
                                             node.AddOverrideTransition(trans);
                                     }
@@ -455,8 +472,7 @@ public class FSMParser
                     {
                         if (elem2.NameEquals("EnableFalseTransition"))
                         {
-                            _logger?.LogDebug("Unsupported 'EnableFalseTransition' in 'addAllTransition'");
-                            HasErrors = true;
+                            continue;
                         }
                         else if (elem2.NameEquals("Transition"))
                         {
@@ -634,10 +650,8 @@ public class FSMParser
             }
         }
 
-        // Fsms can have nothing at all. See: ba7350_snd_1_fsm_ingame
         if (LayersToNodes.Count > 0 && LayersToNodes[0].Count > 0)
         {
-            // TODO: Figure out sound fsm trees (& determine root) properly: i.e pl1100_snd_auto_base_1_fsm_ingame
             RootNode = LayersToNodes[0][0];
                 
             int nIndex = 1;

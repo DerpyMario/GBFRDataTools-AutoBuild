@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace GBFRDataTools.FSM.Components.Actions.AI.PlayerAI;
 
-[Description("Inputs slow left/right movements for a period of time while looking at the enemy the AI is targeting.")]
 public class AIBattleWaitAction : ActionComponent
 {
     [JsonIgnore]
@@ -32,6 +31,11 @@ public class AIBattleWaitAction : ActionComponent
     [JsonPropertyName("isUseJackMode_")]
     public bool IsUseJackMode { get; set; } = false;
 
+    public override string? GetCaption()
+    {
+        return $"Front: {FrontMoveTime:F2}s, Side: {SideMoveTime:F2}s (Type: {Type})";
+    }
+
     public enum BattleWaitActionType
     {
         // These variables are set in the following function
@@ -43,9 +47,9 @@ public class AIBattleWaitAction : ActionComponent
         Type0 = 0,
 
         /// <summary>
-        /// Blackboard Hash: 0x36F3DAE8
+        /// Blackboard Hash: 0x36F3DAE8 (PlayerAI_TargetDistance)
         /// </summary>
-        TargetCenter = 1,
+        TargetDistance = 1,
 
         /// <summary>
         /// Blackboard Hash: 0x0F30C058

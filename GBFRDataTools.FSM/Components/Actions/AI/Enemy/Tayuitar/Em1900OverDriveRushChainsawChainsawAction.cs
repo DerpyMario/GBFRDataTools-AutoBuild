@@ -16,7 +16,16 @@ public class Em1900OverDriveRushChainsawChainsawAction : Em1900OverDriveRushBase
 
     public Em1900OverDriveRushChainsawChainsawAction()
     {
+        IsFirst = false;
+        IsFinish = false;
+        NextWeaponType = 0;
+        HomingRate = 0f;
+        HomingRateStop = 0.1f;
+        DushTime = 2f;
+        IntervalShotFrameNum = 1;
+        HomingBeamRate = 0f;
+        IsEnableBeam = true;
+        IsG3BarrierAttack = false;
+        LoopAnimSpeed = 1f;
     }
 }
-
-

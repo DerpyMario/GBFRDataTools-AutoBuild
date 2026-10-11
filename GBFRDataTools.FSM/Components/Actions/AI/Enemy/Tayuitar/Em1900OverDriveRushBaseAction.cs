@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GBFRDataTools.Entities;
+
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,34 +18,39 @@ public class Em1900OverDriveRushBaseAction : ActionComponent
     public override string ComponentName => nameof(Em1900OverDriveRushBaseAction);
 
     [JsonPropertyName("isFirst_")]
-    public bool IsFirst { get; set; } = false; // Offset 0xAC
+    public bool IsFirst { get; set; } = false; 
 
     [JsonPropertyName("isFinish_")]
-    public bool IsFinish { get; set; } = false; // Offset 0xAD
+    public bool IsFinish { get; set; } = false; 
 
     [JsonPropertyName("nextWeaponType_")]
-    public int NextWeaponType { get; set; } = 0; // Offset 0xB0
+    public int NextWeaponType { get; set; } = 0; 
 
     [JsonPropertyName("homingRate_")]
-    public float HomingRate { get; set; } = 0f; // Offset 0xB4
+    public float HomingRate { get; set; } = 0f; 
 
     [JsonPropertyName("homingRateStop_")]
-    public float HomingRateStop { get; set; } = 0.1f; // Offset 0xB8
+    public float HomingRateStop { get; set; } = 0.1f; 
 
     [JsonPropertyName("dushTime_")]
-    public float DushTime { get; set; } = 2f; // Offset 0xBC
+    public float DushTime { get; set; } = 2f; 
 
     [JsonPropertyName("intervalShotFrameNum_")]
-    public int IntervalShotFrameNum { get; set; } = 1; // Offset 0x70
+    public int IntervalShotFrameNum { get; set; } = 1; 
 
     [JsonPropertyName("homingBeamRate_")]
-    public float HomingBeamRate { get; set; } = 0f; // Offset 0xC0
+    public float HomingBeamRate { get; set; } = 0f; 
 
     [JsonPropertyName("isEnableBeam_")]
-    public bool IsEnableBeam { get; set; } = true; // Offset 0xC4
+    public bool IsEnableBeam { get; set; } = true;
 
-    public Em1900OverDriveRushBaseAction()
-    {
-    }
+    [JsonPropertyName("isG3BarrierAttack_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok.")]
+    public bool IsG3BarrierAttack { get; set; } = false;
+
+    [JsonPropertyName("loopAnimSpeed_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Added in Endless Ragnarok.")]
+    public float LoopAnimSpeed { get; set; } = 1f;
 }
-

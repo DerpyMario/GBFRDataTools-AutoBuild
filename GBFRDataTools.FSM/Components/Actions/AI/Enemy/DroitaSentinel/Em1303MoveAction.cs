@@ -1,4 +1,5 @@
-﻿using GBFRDataTools.Entities.Parameters.Base;
+﻿using GBFRDataTools.Entities;
+using GBFRDataTools.Entities.Parameters.Base;
 using GBFRDataTools.FSM.Components.Actions.Battle;
 
 using System;
@@ -20,15 +21,17 @@ public class Em1303MoveAction : ActionComponent
     public override string ComponentName => nameof(Em1303MoveAction);
 
     [JsonPropertyName("moveSec_")]
-    public float MoveSec { get; set; } = 3f; // Offset 0x78
+    public float MoveSec { get; set; } = 3f; 
 
     [JsonPropertyName("moveLength_")]
-    public float MoveLength { get; set; } = 8f; // Offset 0x7C
+    public float MoveLength { get; set; } = 8f;
 
     [JsonPropertyName("easeParam_")]
-    public EaseParam EaseParam { get; set; } // Offset 0x68
+    public EaseParam EaseParam { get; set; } = new();
 
-    public Em1303MoveAction()
-    {
-    }
+    [JsonPropertyName("isChaosMove_")]
+    [GameSupport(GameVersion.EndlessRagnarok)]
+    [Description("Not exposed by the executable.")]
+    [Obsolete("Not exposed by the executable.")]
+    public bool IsChaosMove { get; set; }
 }

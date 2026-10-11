@@ -1,8 +1,15 @@
 namespace GBFRDataTools.Database;
 
+/// <summary>
+/// Dynamic table mapping reader, for reading .headers files.
+/// </summary>
 public class DynamicTableMappingReader : TableMappingReader
 {
-    private static Lazy<DynamicTableMappingReader> _instance = new();
+    private static readonly Lazy<DynamicTableMappingReader> _instance = new();
+
+    /// <summary>
+    /// Instance.
+    /// </summary>
     public static DynamicTableMappingReader Instance => _instance.Value;
 
     private static Dictionary<string, string> HeaderFiles { get; set; }
@@ -12,14 +19,15 @@ public class DynamicTableMappingReader : TableMappingReader
         string exePath = Utils.GetCurrentExecutingPath();
         string currentDir = Path.GetDirectoryName(exePath)!;
 
-        HeaderFiles = Directory.EnumerateFiles(currentDir, "*.headers").ToDictionary(x => Path.GetFileNameWithoutExtension(x));
+        HeaderFiles = Directory.EnumerateFiles(Path.Combine(currentDir, "Headers"), "*.headers").ToDictionary(x => Path.GetFileNameWithoutExtension(x));
     }
 
-    private DynamicTableMappingReader()
+    public DynamicTableMappingReader()
     {
 
     }
 
+    /// <inheritdoc/>
     protected override Stream? GetHeaderSource(string tableName)
     {
         if (HeaderFiles.TryGetValue(tableName, out string? path))
@@ -30,11 +38,17 @@ public class DynamicTableMappingReader : TableMappingReader
         return null;
     }
 
+    /// <inheritdoc/>
     protected override void Log(string @string)
     {
         Console.WriteLine(@string);
     }
 
+    /// <summary>
+    /// Returns whether a header file for the specified table name exists.
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <returns></returns>
     public bool ContainsTable(string tableName)
         => HeaderFiles.ContainsKey(tableName);
 }

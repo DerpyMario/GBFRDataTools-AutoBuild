@@ -27,4 +27,9 @@ public class SummonChangeHitVFXAction : ActionComponent
 
     [JsonPropertyName("estId_")]
     public uint EstId { get; set; } = 0xFFFFFFFF;
+
+    public override string? GetCaption()
+    {
+        return $"ObjId: {(eObjIdType)(ObjId & 0xFFFF0000)}{ObjId & 0xFFFF:X}, EstId: {EstId}";
+    }
 }

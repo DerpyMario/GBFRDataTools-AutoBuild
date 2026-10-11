@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace GBFRDataTools.FSM.Components.Conditions.AI.PlayerAI;
 
-[Description("Returns whether the entity the AI is targetting is alive.")]
 public class AIBattleObjectAliveCondition : ConditionComponent
 {
     [JsonIgnore]
@@ -26,9 +25,9 @@ public enum AIBattleObjectAliveConditionType
     Type0 = 0,
 
     /// <summary>
-    /// Checks blackboard bool variable: 0xC7D7747C
+    /// Checks blackboard bool variable: 0xC7D7747C (PlayerAI_IsExistAttackTarget)
     /// </summary>
-    Type1 = 1,
+    PlayerAI_IsExistAttackTarget = 1,
 
     /// <summary>
     /// Checks blackboard bool variable: 0x25D7618D (PlayerAI_IsExistOrderTarget)
